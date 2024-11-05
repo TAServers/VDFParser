@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 20)
 add_library(VDFParser
         VDFParser.hpp
         src/errors.hpp
+        src/vdf.cpp
+        src/vdf.hpp
 )
 
 target_include_directories(
