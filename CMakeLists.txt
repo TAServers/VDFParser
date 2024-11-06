@@ -9,6 +9,9 @@ add_library(VDFParser
         src/errors.hpp
         src/vdf.cpp
         src/vdf.hpp
+        src/keyvalue.hpp
+        src/peekable-stream.cpp
+        src/peekable-stream.hpp
 )
 
 target_include_directories(
