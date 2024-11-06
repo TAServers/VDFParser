@@ -11,15 +11,12 @@ namespace VdfParser {
   }
 
   std::string PeekableStream::consumeWhile(const std::function<bool(char)>& predicate) {
-    size_t count = 0;
+    const size_t startIndex = index;
     while (predicate(peek())) {
-      count++;
+      discard();
     }
 
-    std::string consumed = peek(count);
-    index += count;
-
-    return std::move(consumed);
+    return data.substr(startIndex, index - startIndex);
   }
 
   char PeekableStream::peek() const {
