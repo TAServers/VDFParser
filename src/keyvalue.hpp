@@ -6,6 +6,6 @@
 
 namespace VdfParser {
   struct KeyValue {
-    std::variant<std::string, float, std::unordered_map<std::string, KeyValue>> value;
+    std::variant<std::string, std::unordered_map<std::string, KeyValue>> value;
   };
 }
