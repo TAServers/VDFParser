@@ -11,7 +11,7 @@ namespace VdfParser {
     std::string key;
     std::variant<std::string, std::vector<KeyValue>> value;
 
-    [[nodiscard]] std::optional<const std::vector<KeyValue>&> getChildren() const;
+    [[nodiscard]] std::optional<std::vector<KeyValue>> getChildren() const;
 
     [[nodiscard]] std::optional<KeyValue> getChild(const std::string& key) const;
 

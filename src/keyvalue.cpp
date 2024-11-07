@@ -2,7 +2,7 @@
 
 namespace VdfParser {
 
-  std::optional<const std::vector<KeyValue>&> KeyValue::getChildren() const {
+  std::optional<std::vector<KeyValue>> KeyValue::getChildren() const {
     if (!std::holds_alternative<std::vector<KeyValue>>(value)) {
       return std::nullopt;
     }
@@ -41,7 +41,7 @@ namespace VdfParser {
   }
 
   std::optional<std::string> KeyValue::getValue() const {
-    return std::holds_alternative<std::string>(value) ? std::get<std::string>(value) : std::nullopt;
+    return std::holds_alternative<std::string>(value) ? std::make_optional(std::get<std::string>(value)) : std::nullopt;
   }
 
   std::optional<std::string> KeyValue::getNestedValue(const std::vector<std::string>& path) const {
