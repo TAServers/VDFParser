@@ -42,17 +42,18 @@ namespace VdfParser {
       }
     }
 
-    std::unordered_map<std::string, KeyValue> parseKeyValues(PeekableStream& stream) {
-      std::unordered_map<std::string, KeyValue> keyValues;
+    std::vector<KeyValue> parseKeyValues(PeekableStream& stream) {
+      std::vector<KeyValue> values;
 
       while (!stream.empty() && stream.peek() != '}') {
-        discardWhitespaceAndComments(stream);
-
-        auto key = parseLiteral(stream);
-
-        discardWhitespaceAndComments(stream);
-
         KeyValue keyValue;
+
+        discardWhitespaceAndComments(stream);
+
+        keyValue.key = parseLiteral(stream);
+
+        discardWhitespaceAndComments(stream);
+
         if (stream.peek() == '{') {
           stream.discard();
           keyValue.value = parseKeyValues(stream);
@@ -66,17 +67,17 @@ namespace VdfParser {
           keyValue.value = parseLiteral(stream);
         }
 
-        keyValues.emplace(std::move(key), std::move(keyValue));
+        values.push_back(std::move(keyValue));
 
         discardWhitespaceAndComments(stream);
       }
 
-      return std::move(keyValues);
+      return std::move(values);
     }
   }
 
-  std::unordered_map<std::string, KeyValue> fromString(const std::string& raw) {
+  KeyValue fromString(const std::string& raw) {
     PeekableStream stream(raw);
-    return parseKeyValues(stream);
+    return KeyValue{.key = "root", .value = parseKeyValues(stream)};
   }
 }

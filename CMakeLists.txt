@@ -12,6 +12,7 @@ add_library(VDFParser
         src/keyvalue.hpp
         src/peekable-stream.cpp
         src/peekable-stream.hpp
+        src/keyvalue.cpp
 )
 
 target_include_directories(
