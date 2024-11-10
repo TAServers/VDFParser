@@ -13,6 +13,8 @@ add_library(VDFParser
         src/peekable-stream.cpp
         src/peekable-stream.hpp
         src/keyvalue.cpp
+        src/case-insensitive-map.hpp
+        src/case-insensitive-map.cpp
 )
 
 target_include_directories(

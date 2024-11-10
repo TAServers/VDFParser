@@ -42,15 +42,15 @@ namespace VdfParser {
       }
     }
 
-    std::vector<KeyValue> parseKeyValues(PeekableStream& stream) {
-      std::vector<KeyValue> values;
+    CaseInsensitiveMap<KeyValue> parseKeyValues(PeekableStream& stream) {
+      CaseInsensitiveMap<KeyValue> values;
 
       while (!stream.empty() && stream.peek() != '}') {
         KeyValue keyValue;
 
         discardWhitespaceAndComments(stream);
 
-        keyValue.key = parseLiteral(stream);
+        auto key = parseLiteral(stream);
 
         discardWhitespaceAndComments(stream);
 
@@ -67,7 +67,7 @@ namespace VdfParser {
           keyValue.value = parseLiteral(stream);
         }
 
-        values.push_back(std::move(keyValue));
+        values.emplace(std::move(key), std::move(keyValue));
 
         discardWhitespaceAndComments(stream);
       }
@@ -78,6 +78,6 @@ namespace VdfParser {
 
   KeyValue fromString(const std::string& raw) {
     PeekableStream stream(raw);
-    return KeyValue{.key = "root", .value = parseKeyValues(stream)};
+    return KeyValue{.value = parseKeyValues(stream)};
   }
 }

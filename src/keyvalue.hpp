@@ -1,5 +1,6 @@
 #pragma once
 
+#include "case-insensitive-map.hpp"
 #include <optional>
 #include <string>
 #include <unordered_map>
@@ -8,10 +9,9 @@
 
 namespace VdfParser {
   struct KeyValue {
-    std::string key;
-    std::variant<std::string, std::vector<KeyValue>> value;
+    std::variant<std::string, CaseInsensitiveMap<KeyValue>> value;
 
-    [[nodiscard]] std::optional<std::vector<KeyValue>> getChildren() const;
+    [[nodiscard]] std::optional<CaseInsensitiveMap<KeyValue>> getChildren() const;
 
     [[nodiscard]] std::optional<KeyValue> getChild(const std::string& key) const;
 

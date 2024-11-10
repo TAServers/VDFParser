@@ -2,12 +2,12 @@
 
 namespace VdfParser {
 
-  std::optional<std::vector<KeyValue>> KeyValue::getChildren() const {
-    if (!std::holds_alternative<std::vector<KeyValue>>(value)) {
+  std::optional<CaseInsensitiveMap<KeyValue>> KeyValue::getChildren() const {
+    if (!std::holds_alternative<CaseInsensitiveMap<KeyValue>>(value)) {
       return std::nullopt;
     }
 
-    return std::get<std::vector<KeyValue>>(value);
+    return std::get<CaseInsensitiveMap<KeyValue>>(value);
   }
 
   std::optional<KeyValue> KeyValue::getChild(const std::string& key) const {
@@ -16,13 +16,7 @@ namespace VdfParser {
       return std::nullopt;
     }
 
-    for (const auto& child : children.value()) {
-      if (child.key == key) {
-        return child;
-      }
-    }
-
-    return std::nullopt;
+    return children->contains(key) ? std::make_optional(children->at(key)) : std::nullopt;
   }
 
   bool KeyValue::hasChild(const std::string& key) const {
@@ -31,13 +25,7 @@ namespace VdfParser {
       return false;
     }
 
-    for (const auto& child : children.value()) {
-      if (child.key == key) {
-        return true;
-      }
-    }
-
-    return false;
+    return children->contains(key);
   }
 
   std::optional<std::string> KeyValue::getValue() const {
