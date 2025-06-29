@@ -30,3 +30,5 @@ namespace VdfParser::Errors {
   ERROR_FOR_REASON(OutOfBoundsAccess);
   ERROR_FOR_REASON(UnexpectedCharacter);
 }
+
+#undef ERROR_FOR_REASON
